@@ -4,6 +4,8 @@ A rule-based expert system that predicts which streets and user groups a road cl
 
 Everything the expert knows lives in **JSON**: rules, case facts, questions and the decision policy. The Python engine validates those files, reasons over them with forward and backward chaining, **asks the user only for the facts it needs**, and returns a decision with alerts and a full explanation trace.
 
+**Live demo:** [medmov-xs.vercel.app](https://medmov-xs.vercel.app)
+
 **Authors:** Mateo Gómez Tamayo · Juan Camilo Fernández — Ingeniería de Sistemas, Institución Universitaria Salazar y Herrera (IUSH), Medellín.
 
 ## Quick start
