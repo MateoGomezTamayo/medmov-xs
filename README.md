@@ -28,6 +28,23 @@ DECISION: APPROVE_WITH_CONDITIONS  (D3: There are HIGH alerts, but they can be m
   [MEDIUM] STATION_CROWDING at Calle 44 with Carrera 76   <- R07
 ```
 
+## Web interface
+
+`web/` is a React + Vite page built on the Ayudas Colombia interface (same dark palette, cards, bottom navigation and Esri dark map). It reads **the same JSON files** as the Python engine, runs a JavaScript port of the engine in the browser and asks its questions with Yes / No / I don't know buttons.
+
+```bash
+cd web
+npm install
+npm run dev        # http://localhost:5173
+npm run parity     # the JS engine must give byte-identical output to output/*.json from Python
+npm run build
+```
+
+- **Cases:** a map of Medellín with the three scenarios (approximate hotspot locations) and their last decision.
+- **Evaluate:** one question at a time, the rules fired so far, then the decision, alerts with evidence, conditions, open questions and the full explanation trace (downloadable as JSON).
+- **New case:** start with no facts; the engine works backwards from its rules and asks only what it needs.
+- **Knowledge base:** every rule in priority order and the decision policy.
+
 ## How it works
 
 ```
