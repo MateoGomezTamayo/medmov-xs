@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "questions.schema.json",
+  "title": "Questions for missing facts (questions.json)",
+  "type": "object",
+  "required": ["questions"],
+  "properties": {
+    "version": { "type": "string" },
+    "questions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["fact", "type", "text"],
+        "additionalProperties": false,
+        "properties": {
+          "fact": { "type": "string" },
+          "type": { "enum": ["boolean", "number", "choice"] },
+          "text": { "type": "string" },
+          "options": { "type": "array", "minItems": 2, "items": { "type": "string" } },
+          "min": { "type": "number" },
+          "max": { "type": "number" }
+        },
+        "if": { "properties": { "type": { "const": "choice" } } },
+        "then": { "required": ["options"] }
+      }
+    }
+  }
+}

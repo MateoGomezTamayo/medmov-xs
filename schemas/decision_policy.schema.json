@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "decision_policy.schema.json",
+  "title": "Decision policy (decision_policy.json)",
+  "type": "object",
+  "required": ["rules", "default"],
+  "properties": {
+    "version": { "type": "string" },
+    "description": { "type": "string" },
+    "rules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "when", "decision", "reason"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string" },
+          "when": { "$ref": "condition.schema.json" },
+          "decision": { "enum": ["APPROVE", "APPROVE_WITH_CONDITIONS", "REJECT"] },
+          "reason": { "type": "string" }
+        }
+      }
+    },
+    "default": {
+      "type": "object",
+      "required": ["decision", "reason"],
+      "properties": {
+        "decision": { "enum": ["APPROVE", "APPROVE_WITH_CONDITIONS", "REJECT"] },
+        "reason": { "type": "string" }
+      }
+    }
+  }
+}

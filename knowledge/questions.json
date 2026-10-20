@@ -1,0 +1,25 @@
+{
+  "version": "1.0",
+  "questions": [
+    { "fact": "detour.passes_school_zone", "type": "boolean", "text": "Does the detour pass through a school zone?" },
+    { "fact": "time.school_peak", "type": "boolean", "text": "Does the closure overlap school entry or exit (6-8 a.m. or 12-2 p.m.)?" },
+    { "fact": "detour.heavy_vehicles", "type": "boolean", "text": "Will heavy vehicles (trucks, buses) use the detour?" },
+    { "fact": "detour.bike_lane", "type": "choice", "options": ["none", "separated", "shared"], "text": "What kind of bike lane does the detour street have?" },
+    { "fact": "detour.flow_increase_pct", "type": "number", "min": 0, "max": 500, "text": "By what percentage will traffic increase on the detour street?" },
+    { "fact": "intersection.high_crash_history", "type": "boolean", "text": "Does the main detour intersection have a high crash history?" },
+    { "fact": "closure.removes_transit_stop", "type": "boolean", "text": "Does the closure remove a Metroplús or feeder bus stop?" },
+    { "fact": "transit.alt_stop_within_300m", "type": "boolean", "text": "Is there an alternative stop within 300 m?" },
+    { "fact": "transit.added_minutes", "type": "number", "min": 0, "max": 240, "text": "How many minutes does the detour add to bus routes on the corridor?" },
+    { "fact": "event.massive", "type": "boolean", "text": "Is there a massive event at the stadium during the closure?" },
+    { "fact": "works.parallel_corridor_active", "type": "boolean", "text": "Are there active road works on a parallel corridor?" },
+    { "fact": "event.exit_crowd", "type": "number", "min": 0, "max": 100000, "text": "How many people are expected to leave the event at once?" },
+    { "fact": "closure.metro_access_on_street", "type": "boolean", "text": "Is a Metro station entrance on the closed street?" },
+    { "fact": "detour.removes_loading_zones", "type": "boolean", "text": "Does the detour remove loading zones on a commercial street?" },
+    { "fact": "time.business_hours", "type": "boolean", "text": "Does the closure happen during business hours?" },
+    { "fact": "detour.blocks_hospital_access", "type": "boolean", "text": "Does the detour block the main access to a hospital or clinic?" },
+    { "fact": "hospital.alternate_route", "type": "boolean", "text": "Is there an alternate route to the hospital?" },
+    { "fact": "detour.residential_night_minutes", "type": "number", "min": 0, "max": 480, "text": "How many minutes will through-traffic run on residential streets between 22:00 and 6:00?" },
+    { "fact": "mitigation.available", "type": "boolean", "text": "Can a mitigation be deployed (traffic agents, alternate route or temporary stop)?" },
+    { "fact": "detour.single_hotspot", "type": "boolean", "text": "Are the conflicts concentrated on a single intersection?" }
+  ]
+}

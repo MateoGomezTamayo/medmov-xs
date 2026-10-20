@@ -1,0 +1,213 @@
+{
+  "version": "1.0",
+  "description": "MedMov-XS knowledge base: mobility rules for Medellín. Thresholds are starting values to be agreed with a mobility expert.",
+  "rules": [
+    {
+      "id": "R01",
+      "name": "School zone at school hours",
+      "goal": "Pedestrians",
+      "priority": 90,
+      "when": {
+        "all": [
+          { "fact": "detour.passes_school_zone", "op": "==", "value": true },
+          { "fact": "time.school_peak", "op": "==", "value": true },
+          { "fact": "detour.heavy_vehicles", "op": "==", "value": true }
+        ]
+      },
+      "then": {
+        "alert": { "level": "HIGH", "code": "SCHOOL_SAFETY" },
+        "assert": { "conflict.school_safety": true },
+        "recommend": ["Ban heavy vehicles on the detour during school entry and exit"]
+      },
+      "because": "Heavy detour traffic near a school at entry or exit time raises child pedestrian risk."
+    },
+    {
+      "id": "R02",
+      "name": "Unprotected bike lane with more traffic",
+      "goal": "Cyclists",
+      "priority": 85,
+      "when": {
+        "all": [
+          { "fact": "detour.bike_lane", "op": "==", "value": "shared" },
+          { "fact": "detour.flow_increase_pct", "op": ">", "value": 30 }
+        ]
+      },
+      "then": {
+        "alert": { "level": "HIGH", "code": "CYCLIST_RISK" },
+        "assert": { "conflict.cyclists": true },
+        "recommend": ["Place traffic agents at the detour hotspot", "Add temporary separators on the bike lane"]
+      },
+      "because": "Flow rises more than 30% on a street whose bike lane has no physical separation."
+    },
+    {
+      "id": "R03",
+      "name": "Crash-prone intersection gets more traffic",
+      "goal": "Road safety",
+      "priority": 85,
+      "when": {
+        "all": [
+          { "fact": "intersection.high_crash_history", "op": "==", "value": true },
+          { "fact": "detour.flow_increase_pct", "op": ">", "value": 20 }
+        ]
+      },
+      "then": {
+        "alert": { "level": "HIGH", "code": "CRITICAL_INTERSECTION" },
+        "assert": { "conflict.road_safety": true },
+        "recommend": ["Adjust signal timing and post agents at the intersection"]
+      },
+      "because": "An intersection with a high crash history receives more than 20% extra flow."
+    },
+    {
+      "id": "R04",
+      "name": "Transit stop removed without alternative",
+      "goal": "Public transit",
+      "priority": 80,
+      "when": {
+        "all": [
+          { "fact": "closure.removes_transit_stop", "op": "==", "value": true },
+          { "fact": "transit.alt_stop_within_300m", "op": "==", "value": false }
+        ]
+      },
+      "then": {
+        "alert": { "level": "HIGH", "code": "TRANSIT_ACCESS_LOST" },
+        "assert": { "conflict.transit_access": true },
+        "recommend": ["Install a temporary bus stop within 300 m"]
+      },
+      "because": "The closure removes a Metroplús or feeder bus stop and there is no alternative stop within 300 m."
+    },
+    {
+      "id": "R05",
+      "name": "Bus route delay",
+      "goal": "Public transit",
+      "priority": 60,
+      "when": {
+        "all": [
+          { "fact": "transit.added_minutes", "op": ">", "value": 10 }
+        ]
+      },
+      "then": {
+        "alert": { "level": "MEDIUM", "code": "TRANSIT_DELAY" },
+        "recommend": ["Coordinate a temporary route change with the bus operator"]
+      },
+      "because": "The detour adds more than 10 minutes to a bus route on the corridor."
+    },
+    {
+      "id": "R06",
+      "name": "Stadium event plus parallel works",
+      "goal": "Capacity",
+      "priority": 80,
+      "when": {
+        "all": [
+          { "fact": "event.massive", "op": "==", "value": true },
+          { "fact": "works.parallel_corridor_active", "op": "==", "value": true }
+        ]
+      },
+      "then": {
+        "alert": { "level": "HIGH", "code": "CORRIDOR_CAPACITY" },
+        "assert": { "conflict.capacity": true },
+        "recommend": ["Suspend works on the parallel corridor during the event"]
+      },
+      "because": "A massive event at the stadium coincides with active works on a parallel corridor."
+    },
+    {
+      "id": "R07",
+      "name": "Crowd at a Metro station entrance",
+      "goal": "Pedestrians",
+      "priority": 65,
+      "when": {
+        "all": [
+          { "fact": "event.exit_crowd", "op": ">", "value": 20000 },
+          { "fact": "closure.metro_access_on_street", "op": "==", "value": true }
+        ]
+      },
+      "then": {
+        "alert": { "level": "MEDIUM", "code": "STATION_CROWDING" },
+        "recommend": ["Request extra Metro staff at the station entrance"]
+      },
+      "because": "More than 20,000 people leave the event and the Metro station entrance is on the closed street."
+    },
+    {
+      "id": "R08",
+      "name": "Loading zones lost on a commercial street",
+      "goal": "Commerce",
+      "priority": 55,
+      "when": {
+        "all": [
+          { "fact": "detour.removes_loading_zones", "op": "==", "value": true },
+          { "fact": "time.business_hours", "op": "==", "value": true }
+        ]
+      },
+      "then": {
+        "alert": { "level": "MEDIUM", "code": "RETAIL_ACCESS" },
+        "recommend": ["Set loading windows before opening hours"]
+      },
+      "because": "The detour removes loading zones on a commercial street during business hours."
+    },
+    {
+      "id": "R09",
+      "name": "Emergency access blocked",
+      "goal": "Emergency",
+      "priority": 95,
+      "when": {
+        "all": [
+          { "fact": "detour.blocks_hospital_access", "op": "==", "value": true },
+          { "fact": "hospital.alternate_route", "op": "==", "value": false }
+        ]
+      },
+      "then": {
+        "alert": { "level": "HIGH", "code": "EMERGENCY_ACCESS" },
+        "assert": { "conflict.emergency": true },
+        "recommend": ["Guarantee an exclusive emergency route before approving"]
+      },
+      "because": "The detour blocks the main access to a hospital or clinic and there is no alternate route."
+    },
+    {
+      "id": "R10",
+      "name": "Night through-traffic on a residential street",
+      "goal": "Residents",
+      "priority": 30,
+      "when": {
+        "all": [
+          { "fact": "detour.residential_night_minutes", "op": ">", "value": 60 }
+        ]
+      },
+      "then": {
+        "alert": { "level": "LOW", "code": "RESIDENT_NOISE" },
+        "recommend": ["Notify residents and monitor noise"]
+      },
+      "because": "Through-traffic runs on a residential street for more than 60 minutes between 22:00 and 6:00."
+    },
+    {
+      "id": "R11",
+      "name": "Mitigation available for high alerts",
+      "goal": "Derived",
+      "priority": 50,
+      "when": {
+        "all": [
+          { "fact": "alerts.high_count", "op": ">=", "value": 1 },
+          { "fact": "mitigation.available", "op": "==", "value": true }
+        ]
+      },
+      "then": {
+        "assert": { "mitigation.possible": true }
+      },
+      "because": "There is at least one HIGH alert and a mitigation exists (agents, alternate route or temporary stop)."
+    },
+    {
+      "id": "R12",
+      "name": "Several high alerts on one hotspot",
+      "goal": "Derived",
+      "priority": 70,
+      "when": {
+        "all": [
+          { "fact": "alerts.high_count", "op": ">=", "value": 2 },
+          { "fact": "detour.single_hotspot", "op": "==", "value": true }
+        ]
+      },
+      "then": {
+        "assert": { "intersection.critical": true }
+      },
+      "because": "Two or more HIGH alerts fall on the same intersection, which makes it critical."
+    }
+  ]
+}

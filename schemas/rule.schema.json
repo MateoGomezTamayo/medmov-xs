@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "rule.schema.json",
+  "title": "Knowledge base (rules.json)",
+  "type": "object",
+  "required": ["rules"],
+  "properties": {
+    "version": { "type": "string" },
+    "description": { "type": "string" },
+    "rules": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "priority", "when", "then", "because"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "pattern": "^R[0-9]{2,}$" },
+          "name": { "type": "string" },
+          "goal": { "type": "string" },
+          "priority": { "type": "integer", "minimum": 0, "maximum": 100 },
+          "when": { "$ref": "condition.schema.json" },
+          "then": {
+            "type": "object",
+            "additionalProperties": false,
+            "minProperties": 1,
+            "properties": {
+              "alert": {
+                "type": "object",
+                "required": ["level", "code"],
+                "additionalProperties": false,
+                "properties": {
+                  "level": { "enum": ["HIGH", "MEDIUM", "LOW"] },
+                  "code": { "type": "string", "pattern": "^[A-Z_]+$" }
+                }
+              },
+              "assert": { "type": "object", "minProperties": 1 },
+              "recommend": { "type": "array", "items": { "type": "string" } }
+            }
+          },
+          "because": { "type": "string", "minLength": 10 }
+        }
+      }
+    }
+  }
+}

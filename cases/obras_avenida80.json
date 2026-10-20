@@ -1,0 +1,26 @@
+{
+  "case_id": "obras_avenida80",
+  "description": "Metro de la 80 works: two lanes closed on Avenida 80 from 7:00 to 17:00, detour via Carrera 76 and Calle 33.",
+  "location": "Avenida 80, Medellín",
+  "facts": {
+    "closure.road": "Avenida 80",
+    "closure.window": "07:00-17:00",
+    "detour.route": ["Carrera 76", "Calle 33"],
+    "detour.hotspot": "Carrera 76 with Calle 33",
+    "detour.passes_school_zone": true,
+    "time.school_peak": true,
+    "detour.bike_lane": "separated",
+    "detour.flow_increase_pct": 25,
+    "intersection.high_crash_history": false,
+    "closure.removes_transit_stop": true,
+    "transit.alt_stop_within_300m": false,
+    "transit.added_minutes": 12,
+    "event.massive": false,
+    "event.exit_crowd": 0,
+    "detour.removes_loading_zones": false,
+    "detour.blocks_hospital_access": false,
+    "detour.residential_night_minutes": 0,
+    "mitigation.available": true,
+    "detour.single_hotspot": false
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "case_id": "alumbrados_centro",
+  "description": "Alumbrados season: Avenida Oriental partially closed 18:00-24:00, detour through El Hueco commercial area.",
+  "decision": "REJECT",
+  "decision_rule": "D1",
+  "decision_reason": "Emergency access is blocked and there is no alternate route.",
+  "alerts": [
+    {
+      "level": "HIGH",
+      "code": "EMERGENCY_ACCESS",
+      "rule": "R09",
+      "because": "The detour blocks the main access to a hospital or clinic and there is no alternate route.",
+      "evidence": {
+        "detour.blocks_hospital_access": true,
+        "hospital.alternate_route": false
+      },
+      "where": "El Hueco"
+    },
+    {
+      "level": "MEDIUM",
+      "code": "RETAIL_ACCESS",
+      "rule": "R08",
+      "because": "The detour removes loading zones on a commercial street during business hours.",
+      "evidence": {
+        "detour.removes_loading_zones": true,
+        "time.business_hours": true
+      },
+      "where": "El Hueco"
+    }
+  ],
+  "recommendations": [
+    "Set loading windows before opening hours",
+    "Guarantee an exclusive emergency route before approving"
+  ],
+  "questions_asked": [
+    {
+      "fact": "hospital.alternate_route",
+      "question": "Is there an alternate route to the hospital?",
+      "answer": false
+    }
+  ],
+  "open_questions": [],
+  "fired_rules": [
+    "R08",
+    "R09"
+  ],
+  "trace": [
+    "R08 fired (Loading zones lost on a commercial street): detour.removes_loading_zones == True (is True), time.business_hours == True (is True)",
+    "Asked hospital.alternate_route for R09: False",
+    "R09 fired (Emergency access blocked): detour.blocks_hospital_access == True (is True), hospital.alternate_route == False (is False)",
+    "  R09 asserted conflict.emergency = True",
+    "R01 not fired: detour.passes_school_zone == True (is False) is false",
+    "R02 not fired: detour.bike_lane == 'shared' (is 'none') is false",
+    "R03 not fired: intersection.high_crash_history == True (is False) is false",
+    "R04 not fired: closure.removes_transit_stop == True (is False) is false",
+    "R05 not fired: transit.added_minutes > 10 (is 6) is false",
+    "R06 not fired: event.massive == True (is False) is false",
+    "R07 not fired: event.exit_crowd > 20000 (is 0) is false",
+    "R10 not fired: detour.residential_night_minutes > 60 (is 0) is false",
+    "R11 not fired: mitigation.available == True (is False) is false",
+    "R12 not fired: alerts.high_count >= 2 (is 1) is false"
+  ]
+}

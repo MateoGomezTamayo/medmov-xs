@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "condition.schema.json",
+  "title": "Condition: a leaf comparison or an all/any group",
+  "oneOf": [
+    {
+      "type": "object",
+      "required": ["fact", "op", "value"],
+      "additionalProperties": false,
+      "properties": {
+        "fact": { "type": "string", "pattern": "^[a-z][a-z0-9_]*([.][a-z0-9_]+)+$" },
+        "op": { "enum": ["==", "!=", ">", ">=", "<", "<=", "in", "not_in", "contains"] },
+        "value": {}
+      }
+    },
+    {
+      "type": "object",
+      "required": ["all"],
+      "additionalProperties": false,
+      "properties": { "all": { "type": "array", "minItems": 1, "items": { "$ref": "condition.schema.json" } } }
+    },
+    {
+      "type": "object",
+      "required": ["any"],
+      "additionalProperties": false,
+      "properties": { "any": { "type": "array", "minItems": 1, "items": { "$ref": "condition.schema.json" } } }
+    }
+  ]
+}

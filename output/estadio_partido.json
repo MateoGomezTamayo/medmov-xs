@@ -1,0 +1,80 @@
+{
+  "case_id": "estadio_partido",
+  "description": "Football match at Atanasio Girardot stadium; Carrera 70 closed 16:00-22:00, detour via Calle 44 and Carrera 76.",
+  "decision": "APPROVE_WITH_CONDITIONS",
+  "decision_rule": "D3",
+  "decision_reason": "There are HIGH alerts, but they can be mitigated; the mitigations become conditions.",
+  "alerts": [
+    {
+      "level": "HIGH",
+      "code": "CYCLIST_RISK",
+      "rule": "R02",
+      "because": "Flow rises more than 30% on a street whose bike lane has no physical separation.",
+      "evidence": {
+        "detour.bike_lane": "shared",
+        "detour.flow_increase_pct": 40
+      },
+      "where": "Calle 44 with Carrera 76"
+    },
+    {
+      "level": "HIGH",
+      "code": "CORRIDOR_CAPACITY",
+      "rule": "R06",
+      "because": "A massive event at the stadium coincides with active works on a parallel corridor.",
+      "evidence": {
+        "event.massive": true,
+        "works.parallel_corridor_active": true
+      },
+      "where": "Calle 44 with Carrera 76"
+    },
+    {
+      "level": "MEDIUM",
+      "code": "STATION_CROWDING",
+      "rule": "R07",
+      "because": "More than 20,000 people leave the event and the Metro station entrance is on the closed street.",
+      "evidence": {
+        "event.exit_crowd": 40000,
+        "closure.metro_access_on_street": true
+      },
+      "where": "Calle 44 with Carrera 76"
+    }
+  ],
+  "recommendations": [
+    "Place traffic agents at the detour hotspot",
+    "Add temporary separators on the bike lane",
+    "Suspend works on the parallel corridor during the event",
+    "Request extra Metro staff at the station entrance"
+  ],
+  "questions_asked": [
+    {
+      "fact": "closure.metro_access_on_street",
+      "question": "Is a Metro station entrance on the closed street?",
+      "answer": true
+    }
+  ],
+  "open_questions": [],
+  "fired_rules": [
+    "R02",
+    "R06",
+    "R11",
+    "R07"
+  ],
+  "trace": [
+    "R02 fired (Unprotected bike lane with more traffic): detour.bike_lane == 'shared' (is 'shared'), detour.flow_increase_pct > 30 (is 40)",
+    "  R02 asserted conflict.cyclists = True",
+    "R06 fired (Stadium event plus parallel works): event.massive == True (is True), works.parallel_corridor_active == True (is True)",
+    "  R06 asserted conflict.capacity = True",
+    "R11 fired (Mitigation available for high alerts): alerts.high_count >= 1 (is 2), mitigation.available == True (is True)",
+    "  R11 asserted mitigation.possible = True",
+    "Asked closure.metro_access_on_street for R07: True",
+    "R07 fired (Crowd at a Metro station entrance): event.exit_crowd > 20000 (is 40000), closure.metro_access_on_street == True (is True)",
+    "R01 not fired: detour.passes_school_zone == True (is False) is false",
+    "R03 not fired: intersection.high_crash_history == True (is False) is false",
+    "R04 not fired: closure.removes_transit_stop == True (is False) is false",
+    "R05 not fired: transit.added_minutes > 10 (is 5) is false",
+    "R08 not fired: detour.removes_loading_zones == True (is False) is false",
+    "R09 not fired: detour.blocks_hospital_access == True (is False) is false",
+    "R10 not fired: detour.residential_night_minutes > 60 (is 0) is false",
+    "R12 not fired: detour.single_hotspot == True (is False) is false"
+  ]
+}

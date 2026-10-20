@@ -1,0 +1,25 @@
+{
+  "case_id": "alumbrados_centro",
+  "description": "Alumbrados season: Avenida Oriental partially closed 18:00-24:00, detour through El Hueco commercial area.",
+  "location": "Centro, Medellín",
+  "facts": {
+    "closure.road": "Avenida Oriental",
+    "closure.window": "18:00-24:00",
+    "detour.route": ["El Hueco streets"],
+    "detour.hotspot": "El Hueco",
+    "detour.passes_school_zone": false,
+    "detour.bike_lane": "none",
+    "detour.flow_increase_pct": 15,
+    "intersection.high_crash_history": false,
+    "closure.removes_transit_stop": false,
+    "transit.added_minutes": 6,
+    "event.massive": false,
+    "event.exit_crowd": 0,
+    "detour.removes_loading_zones": true,
+    "time.business_hours": true,
+    "detour.blocks_hospital_access": true,
+    "detour.residential_night_minutes": 0,
+    "mitigation.available": false,
+    "detour.single_hotspot": false
+  }
+}

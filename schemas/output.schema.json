@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "output.schema.json",
+  "title": "Engine output (output/*.json)",
+  "type": "object",
+  "required": ["case_id", "decision", "decision_reason", "alerts", "recommendations", "questions_asked", "open_questions", "fired_rules", "trace"],
+  "properties": {
+    "case_id": { "type": "string" },
+    "description": { "type": "string" },
+    "decision": { "enum": ["APPROVE", "APPROVE_WITH_CONDITIONS", "REJECT"] },
+    "decision_rule": { "type": "string" },
+    "decision_reason": { "type": "string" },
+    "alerts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["level", "code", "rule", "because"],
+        "properties": {
+          "level": { "enum": ["HIGH", "MEDIUM", "LOW"] },
+          "code": { "type": "string" },
+          "rule": { "type": "string" },
+          "where": { "type": "string" },
+          "because": { "type": "string" },
+          "evidence": { "type": "object" }
+        }
+      }
+    },
+    "recommendations": { "type": "array", "items": { "type": "string" } },
+    "questions_asked": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["fact", "question", "answer"],
+        "properties": { "fact": { "type": "string" }, "question": { "type": "string" }, "answer": {} }
+      }
+    },
+    "open_questions": { "type": "array", "items": { "type": "string" } },
+    "fired_rules": { "type": "array", "items": { "type": "string" } },
+    "trace": { "type": "array", "items": { "type": "string" } }
+  }
+}

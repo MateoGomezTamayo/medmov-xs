@@ -1,0 +1,25 @@
+{
+  "case_id": "estadio_partido",
+  "description": "Football match at Atanasio Girardot stadium; Carrera 70 closed 16:00-22:00, detour via Calle 44 and Carrera 76.",
+  "location": "Estadio / Laureles, Medellín",
+  "facts": {
+    "closure.road": "Carrera 70",
+    "closure.window": "16:00-22:00",
+    "detour.route": ["Calle 44", "Carrera 76"],
+    "detour.hotspot": "Calle 44 with Carrera 76",
+    "detour.passes_school_zone": false,
+    "detour.bike_lane": "shared",
+    "detour.flow_increase_pct": 40,
+    "intersection.high_crash_history": false,
+    "closure.removes_transit_stop": false,
+    "transit.added_minutes": 5,
+    "event.massive": true,
+    "works.parallel_corridor_active": true,
+    "event.exit_crowd": 40000,
+    "detour.removes_loading_zones": false,
+    "detour.blocks_hospital_access": false,
+    "detour.residential_night_minutes": 0,
+    "mitigation.available": true,
+    "detour.single_hotspot": false
+  }
+}

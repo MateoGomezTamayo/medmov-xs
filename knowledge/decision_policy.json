@@ -1,0 +1,43 @@
+{
+  "version": "1.0",
+  "description": "Applied top to bottom; the first matching rule decides. Missing facts count as not true (closed world).",
+  "rules": [
+    {
+      "id": "D1",
+      "when": { "all": [ { "fact": "rules.fired", "op": "contains", "value": "R09" } ] },
+      "decision": "REJECT",
+      "reason": "Emergency access is blocked and there is no alternate route."
+    },
+    {
+      "id": "D2",
+      "when": { "all": [
+        { "fact": "intersection.critical", "op": "==", "value": true },
+        { "fact": "mitigation.possible", "op": "!=", "value": true }
+      ] },
+      "decision": "REJECT",
+      "reason": "A critical intersection has no mitigation."
+    },
+    {
+      "id": "D3",
+      "when": { "all": [
+        { "fact": "alerts.high_count", "op": ">=", "value": 1 },
+        { "fact": "mitigation.possible", "op": "==", "value": true }
+      ] },
+      "decision": "APPROVE_WITH_CONDITIONS",
+      "reason": "There are HIGH alerts, but they can be mitigated; the mitigations become conditions."
+    },
+    {
+      "id": "D4",
+      "when": { "all": [ { "fact": "alerts.high_count", "op": ">=", "value": 1 } ] },
+      "decision": "REJECT",
+      "reason": "There are HIGH alerts and no mitigation."
+    },
+    {
+      "id": "D5",
+      "when": { "all": [ { "fact": "alerts.total", "op": ">=", "value": 1 } ] },
+      "decision": "APPROVE_WITH_CONDITIONS",
+      "reason": "Only MEDIUM or LOW alerts; approve with the recommended measures."
+    }
+  ],
+  "default": { "decision": "APPROVE", "reason": "No conflicts detected." }
+}
